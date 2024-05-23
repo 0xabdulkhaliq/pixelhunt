@@ -4,6 +4,12 @@ export default function Gameboard() {
   const [coords, setCoords] = useState(false);
   const [tooltipPosition, setTooltipPosition] = useState(true);
   const markerRef = useRef(null);
+  const imageRef = useRef(null);
+
+  const targetCoordinates = [
+    { x: 88, y: 106, name: "Letter S" },
+    { x: 601, y: 257, name: "Second Dot" },
+  ];
 
   function getCoords(e) {
     const imageRect = e.target.getBoundingClientRect();
@@ -12,6 +18,23 @@ export default function Gameboard() {
 
     console.log(`X: ${x}px, Y: ${y}px`);
     setCoords({ X: x, Y: y });
+  }
+
+  function validateCoordinates(target) {
+    const img = imageRef.current;
+
+    const cursor = {
+      X: Math.floor((coords.X / img.clientWidth) * img.naturalWidth),
+      Y: Math.floor((coords.Y / img.clientHeight) * img.naturalHeight),
+    };
+
+    console.log(`Native Coordinates for X: ${coords.X}, Y: ${coords.Y}`);
+    console.log(`Image Coordinates for X: ${cursor.X}, Y: ${cursor.Y}`);
+
+    const result =
+      Math.abs(target.x - cursor.X) < 20 && Math.abs(target.y - cursor.Y) < 20;
+
+    console.log("Result: ", result);
   }
 
   useEffect(() => {
@@ -27,7 +50,12 @@ export default function Gameboard() {
   return (
     <main>
       <div className="relative">
-        <img src="words-waldo.webp" alt="Waldo" onClick={getCoords} />
+        <img
+          ref={imageRef}
+          src="words-waldo.webp"
+          alt="Waldo"
+          onClick={getCoords}
+        />
         {coords && (
           <div
             ref={markerRef}
@@ -42,12 +70,15 @@ export default function Gameboard() {
               style={{
                 translate: `${tooltipPosition ? "6" : "-6"}rem`,
               }}
-              className="absolute min-w-24 top-0 overflow-hidden outline outline-1 outline-gray-400 shadow-2xl rounded-md"
+              className="absolute min-w-max top-0 overflow-hidden outline outline-1 outline-gray-400 shadow-2xl rounded-md"
             >
-              {[1, 2, 3].map((el, index) => (
-                <li key={index} className="w-full">
-                  <button className="px-5 w-full py-3 outline font-normal outline-1 outline-gray-400 text-start bg-gray-50 transition-[background] md:hover:bg-gray-200 active:bg-gray-300">
-                    Target {el}
+              {targetCoordinates.map((item, index) => (
+                <li key={index}>
+                  <button
+                    onClick={() => validateCoordinates(item)}
+                    className="px-5 w-full py-3 outline font-normal outline-1 outline-gray-400 text-start bg-gray-50 transition-[background] md:hover:bg-gray-200 active:bg-gray-300"
+                  >
+                    {item.name}
                   </button>
                 </li>
               ))}
