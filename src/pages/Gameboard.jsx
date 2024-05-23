@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 export default function Gameboard() {
   const [coords, setCoords] = useState(false);
   const [tooltipPosition, setTooltipPosition] = useState(true);
+  const containerRef = useRef(null);
   const markerRef = useRef(null);
   const imageRef = useRef(null);
 
@@ -34,7 +35,25 @@ export default function Gameboard() {
     const result =
       Math.abs(target.x - cursor.X) < 20 && Math.abs(target.y - cursor.Y) < 20;
 
-    console.log("Result: ", result);
+    createIndicator(result);
+  }
+
+  function createIndicator(isSuccess) {
+    const indicator = document.createElement("div");
+    indicator.style.left = `${coords.X - 28}px`;
+    indicator.style.top = `${coords.Y - 28}px`;
+    indicator.style.background = isSuccess ? "#0a0c" : "#a00c";
+    indicator.className =
+      "grid absolute top-0 left-0 place-items-center -outline-offset-[.3rem] w-14 h-14 rounded-full outline-dashed outline-3 outline-white";
+
+    indicator.innerHTML = `<svg width="28" height="28" viewBox="0 0 24 24" stroke="#fff" fill="none" stroke-width="3">${
+      isSuccess
+        ? '<polyline points="20 6 9 17 4 12"/>'
+        : '<line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>'
+    }</svg>`;
+
+    containerRef.current.appendChild(indicator);
+    setCoords(false);
   }
 
   useEffect(() => {
@@ -49,7 +68,7 @@ export default function Gameboard() {
 
   return (
     <main>
-      <div className="relative">
+      <div ref={containerRef} className="relative">
         <img
           ref={imageRef}
           src="words-waldo.webp"
