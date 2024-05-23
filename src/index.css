@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .btn-primary {
+    @apply bg-primary cursor-pointer text-white text-center text-sm block px-4 py-2 uppercase tracking-wider font-medium shadow-md rounded-md transition-[transform,background] duration-500 hover:bg-indigo-700 active:scale-90;
+  }
+}
