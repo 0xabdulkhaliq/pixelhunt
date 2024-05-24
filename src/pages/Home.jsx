@@ -1,11 +1,9 @@
-import { Link } from "react-router-dom";
+import GameSelection from "../components/GameSelection";
 
 export default function Home() {
   return (
-    <main className="mx-auto">
-      <Link to={"/gameboard"} className="btn-primary w-max">
-        Game
-      </Link>
+    <main className="my-6">
+      <GameSelection />
     </main>
   );
 }
