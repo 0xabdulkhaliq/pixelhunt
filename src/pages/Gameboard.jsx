@@ -7,6 +7,11 @@ export default function Gameboard() {
   if (!state) return <Navigate to="/" />;
 
   const [coords, setCoords] = useState(false);
+  const [targetStats, setTargetStats] = useState(
+    Object.fromEntries(
+      Array.from({ length: state.targets.length }, (_, i) => [i, false])
+    )
+  );
   const [tooltipPosition, setTooltipPosition] = useState(true);
   const containerRef = useRef(null);
   const markerRef = useRef(null);
@@ -21,7 +26,7 @@ export default function Gameboard() {
     setCoords({ X: x, Y: y });
   }
 
-  function validateCoordinates(target) {
+  function validateCoordinates(target, index) {
     const img = imageRef.current;
 
     const cursor = {
@@ -34,6 +39,12 @@ export default function Gameboard() {
 
     const result =
       Math.abs(target.x - cursor.X) < 30 && Math.abs(target.y - cursor.Y) < 30;
+
+    if (result)
+      setTargetStats({
+        ...targetStats,
+        [index]: true,
+      });
 
     createIndicator(result);
   }
@@ -58,11 +69,11 @@ export default function Gameboard() {
 
   useEffect(() => {
     if (coords) {
-      const marker = markerRef.current.getBoundingClientRect();
+      const { right, left } = markerRef.current.getBoundingClientRect();
       const screenWidth = window.innerWidth;
-      const rightSpace = screenWidth - marker.right;
+      const spaceAvailable = screenWidth - Math.min(right, left);
 
-      setTooltipPosition(rightSpace >= 190);
+      setTooltipPosition(spaceAvailable >= 210);
     }
   }, [coords]);
 
@@ -82,21 +93,22 @@ export default function Gameboard() {
 
             <ul
               style={{
-                translate: `${tooltipPosition ? "8" : "-8"}rem`,
+                translate: `${tooltipPosition ? "70" : "-70"}%`,
               }}
               className="absolute min-w-max top-0 overflow-hidden outline outline-1 outline-gray-400 shadow-2xl rounded-md"
             >
               {state.targets.map((item, index) => (
                 <li key={index}>
                   <button
-                    onClick={() => validateCoordinates(item.marker)}
-                    className="p-3 pr-4 flex gap-2 items-center w-full font-normal border border-gray-300 border-collapse text-start bg-gray-50 transition-[background] md:hover:bg-gray-200 active:bg-gray-300"
+                    disabled={targetStats[index]}
+                    onClick={() => validateCoordinates(item.marker, index)}
+                    className="p-3 pr-4 flex gap-2 items-center w-full font-normal border border-gray-300 border-collapse text-start bg-gray-50 transition-[background] md:hover:bg-gray-200 active:bg-gray-300 disabled:pointer-events-none disabled:brightness-95 disabled:line-through"
                   >
                     <img
                       src={item.image}
                       alt=""
                       className="w-12 h-12 border border-indigo-300 rounded-md object-cover"
-                    />{" "}
+                    />
                     {item.name}
                   </button>
                 </li>
