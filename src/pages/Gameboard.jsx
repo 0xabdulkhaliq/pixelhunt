@@ -1,16 +1,16 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { useState, useEffect, useRef } from "react";
+import { useLocation, Navigate } from "react-router-dom";
 
 export default function Gameboard() {
+  const { state } = useLocation();
+  if (!state) return <Navigate to="/" />;
+
   const [coords, setCoords] = useState(false);
   const [tooltipPosition, setTooltipPosition] = useState(true);
   const containerRef = useRef(null);
   const markerRef = useRef(null);
   const imageRef = useRef(null);
-
-  const targetCoordinates = [
-    { x: 88, y: 106, name: "Letter S" },
-    { x: 601, y: 257, name: "Second Dot" },
-  ];
 
   function getCoords(e) {
     const imageRect = e.target.getBoundingClientRect();
@@ -33,7 +33,7 @@ export default function Gameboard() {
     console.log(`Image Coordinates for X: ${cursor.X}, Y: ${cursor.Y}`);
 
     const result =
-      Math.abs(target.x - cursor.X) < 20 && Math.abs(target.y - cursor.Y) < 20;
+      Math.abs(target.x - cursor.X) < 30 && Math.abs(target.y - cursor.Y) < 30;
 
     createIndicator(result);
   }
@@ -62,19 +62,14 @@ export default function Gameboard() {
       const screenWidth = window.innerWidth;
       const rightSpace = screenWidth - marker.right;
 
-      setTooltipPosition(rightSpace >= 110);
+      setTooltipPosition(rightSpace >= 190);
     }
   }, [coords]);
 
   return (
     <main>
       <div ref={containerRef} className="relative">
-        <img
-          ref={imageRef}
-          src="words-waldo.webp"
-          alt="Waldo"
-          onClick={getCoords}
-        />
+        <img ref={imageRef} src={state.image} alt="Waldo" onClick={getCoords} />
         {coords && (
           <div
             ref={markerRef}
@@ -87,16 +82,21 @@ export default function Gameboard() {
 
             <ul
               style={{
-                translate: `${tooltipPosition ? "6" : "-6"}rem`,
+                translate: `${tooltipPosition ? "8" : "-8"}rem`,
               }}
               className="absolute min-w-max top-0 overflow-hidden outline outline-1 outline-gray-400 shadow-2xl rounded-md"
             >
-              {targetCoordinates.map((item, index) => (
+              {state.targets.map((item, index) => (
                 <li key={index}>
                   <button
-                    onClick={() => validateCoordinates(item)}
-                    className="px-5 w-full py-3 outline font-normal outline-1 outline-gray-400 text-start bg-gray-50 transition-[background] md:hover:bg-gray-200 active:bg-gray-300"
+                    onClick={() => validateCoordinates(item.marker)}
+                    className="p-3 pr-4 flex gap-2 items-center w-full font-normal border border-gray-300 border-collapse text-start bg-gray-50 transition-[background] md:hover:bg-gray-200 active:bg-gray-300"
                   >
+                    <img
+                      src={item.image}
+                      alt=""
+                      className="w-12 h-12 border border-indigo-300 rounded-md object-cover"
+                    />{" "}
                     {item.name}
                   </button>
                 </li>
