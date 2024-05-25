@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useState, useEffect, useRef } from "react";
 import { useLocation, Navigate } from "react-router-dom";
+import Timer from "../components/Timer";
 
 export default function Gameboard() {
   const { state } = useLocation();
@@ -95,14 +96,14 @@ export default function Gameboard() {
               style={{
                 translate: `${tooltipPosition ? "70" : "-70"}%`,
               }}
-              className="absolute min-w-max top-0 overflow-hidden outline outline-1 outline-gray-400 shadow-2xl rounded-md"
+              className="absolute bg-gray-50 min-w-max top-0 overflow-hidden outline outline-1 outline-gray-400 shadow-2xl rounded-md"
             >
               {state.targets.map((item, index) => (
                 <li key={index}>
                   <button
                     disabled={targetStats[index]}
                     onClick={() => validateCoordinates(item.marker, index)}
-                    className="p-3 pr-4 flex gap-2 items-center w-full font-normal border border-gray-300 border-collapse text-start bg-gray-50 transition-[background] md:hover:bg-gray-200 active:bg-gray-300 disabled:pointer-events-none disabled:brightness-95 disabled:line-through"
+                    className="p-3 pr-4 flex gap-2 items-center w-full font-normal border border-gray-300 border-collapse text-start transition-[background] md:hover:bg-gray-200 active:bg-gray-300 disabled:pointer-events-none disabled:opacity-50 disabled:line-through"
                   >
                     <img
                       src={item.image}
@@ -117,6 +118,7 @@ export default function Gameboard() {
           </div>
         )}
       </div>
+      <Timer stats={targetStats} />
     </main>
   );
 }
