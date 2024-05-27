@@ -118,7 +118,7 @@ export default function Gameboard() {
           </div>
         )}
       </div>
-      <Timer stats={targetStats} />
+      <Timer stats={targetStats} gameId={state.id} />
     </main>
   );
 }

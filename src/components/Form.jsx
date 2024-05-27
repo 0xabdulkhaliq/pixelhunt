@@ -1,0 +1,82 @@
+import { useRef, useState } from "react";
+import { Loader } from "react-feather";
+import { useNavigate } from "react-router-dom";
+
+export default function Form({ duration, id }) {
+  const username = useRef(null);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(null);
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!username.current) return setError("Username cannot be empty");
+    if (username.current.length <= 3)
+      return setError("Username must be 3-20 characters");
+
+    try {
+      setLoading(true);
+
+      await fetch(`http://localhost:3000/leaderboard/add-score?gameId=${id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, duration }),
+      });
+    } catch (error) {
+      setError("Network Error, Please try again");
+    } finally {
+      navigate("/");
+    }
+  };
+
+  return (
+    <form
+      action=""
+      onSubmit={handleSubmit}
+      className="bg-white shadow-xl w-full max-w-96 rounded-lg p-4 text-center"
+    >
+      <p className="font-medium mb-1 text-2xl">
+        You finished in{" "}
+        <span className="text-primary">
+          {Math.floor((duration / 1000) % 60)}.{duration % 1000}s
+        </span>
+        !
+      </p>
+      <p>Submit your score to the Leaderboard</p>
+
+      <div className="text-start mt-8">
+        <label htmlFor="name" className="font-normal">
+          Username
+        </label>
+        <input
+          onChange={(e) => (username.current = e.target.value)}
+          type="text"
+          name="name"
+          id="name"
+          className="block outline mt-2 outline-1 outline-gray-400 w-full rounded-md p-2"
+        />
+
+        {error && (
+          <p className="text-red-500 mt-2 ml-2 mb-4 font-normal">» {error}</p>
+        )}
+      </div>
+      <button
+        disabled={loading}
+        className="bg-primary cursor-pointer mt-3 text-white text-center block px-4 py-2 uppercase tracking-wider font-medium shadow-lg rounded-md transition-[transform,background] duration-500 hover:bg-indigo-700 active:scale-90 w-full disabled:pointer-events-none"
+      >
+        {loading ? (
+          <Loader
+            color="#fff"
+            size={30}
+            className="mx-auto animate-spin-slow"
+          />
+        ) : (
+          "Submit"
+        )}
+      </button>
+    </form>
+  );
+}

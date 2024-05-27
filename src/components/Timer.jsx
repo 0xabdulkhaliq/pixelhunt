@@ -1,10 +1,13 @@
 import { useState, useRef, useEffect } from "react";
 import { Clock } from "react-feather";
+import Modal from "./Modal";
+import Form from "./Form";
 
-const Timer = ({ stats }) => {
+const Timer = ({ stats, gameId }) => {
   const [isRunning, setIsRunning] = useState(false);
-  const [elapsedTime, setElapsedTime] = useState(0);
+  const [elapsedTime, setElapsedTime] = useState(null);
   const [modalVisible, setModalVisible] = useState(true);
+  const [formVisible, setFormVisible] = useState(false);
   const startTimeRef = useRef(null);
 
   useEffect(() => {
@@ -20,7 +23,10 @@ const Timer = ({ stats }) => {
   useEffect(() => {
     const targetsFound = Object.values(stats).every((value) => value === true);
 
-    if (targetsFound) setIsRunning(false);
+    if (targetsFound) {
+      setIsRunning(false);
+      setFormVisible(true);
+    }
   }, [stats]);
 
   const startTimer = () => {
@@ -47,16 +53,17 @@ const Timer = ({ stats }) => {
           <p className="text-lg">{formatTime(elapsedTime)}</p>
         </div>
       </div>
-      {modalVisible && (
-        <div className="grid place-items-center fixed bg-[#fff7] backdrop-blur-sm inset-0 min-h-screen">
-          <button
-            className="bg-primary cursor-pointer text-white text-center block px-6 py-3 uppercase tracking-wider font-medium shadow-lg rounded-md transition-[transform,background] duration-500 hover:bg-indigo-700 active:scale-90 text-md w-max"
-            onClick={startTimer}
-          >
-            Start Game
-          </button>
-        </div>
-      )}
+      <Modal visibility={modalVisible}>
+        <button
+          className="bg-primary cursor-pointer text-white border-2 border-white text-center block px-6 py-3 uppercase tracking-wider font-medium shadow-lg rounded-lg transition-[transform,background] duration-500 hover:bg-indigo-700 active:scale-90 text-md w-max"
+          onClick={startTimer}
+        >
+          Start Game
+        </button>
+      </Modal>
+      <Modal visibility={formVisible}>
+        <Form duration={elapsedTime} id={gameId} />
+      </Modal>
     </>
   );
 };
