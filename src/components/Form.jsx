@@ -1,11 +1,12 @@
 import { useRef, useState } from "react";
-import { Loader } from "react-feather";
+import { Loader, CheckCircle } from "react-feather";
 import { useNavigate } from "react-router-dom";
 
 export default function Form({ duration, id }) {
   const username = useRef(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(null);
+  const [successDialog, setSuccessDialog] = useState(null);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -28,11 +29,26 @@ export default function Form({ duration, id }) {
     } catch (error) {
       setError("Network Error, Please try again");
     } finally {
-      navigate("/");
+      setSuccessDialog(true);
+
+      setTimeout(() => {
+        navigate("/");
+      }, 1250);
     }
   };
 
-  return (
+  return successDialog ? (
+    <div className="bg-white shadow-xl w-full max-w-96 rounded-lg p-4 py-7 text-center">
+      <CheckCircle
+        className="text-green-500 mx-auto"
+        size={85}
+        strokeWidth={1.6}
+      />
+      <h2 className="font-normal mt-6 text-xl md:text-2xl">
+        Score Added Successfully!
+      </h2>
+    </div>
+  ) : (
     <form
       action=""
       onSubmit={handleSubmit}
