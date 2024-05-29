@@ -1,12 +1,27 @@
 import gameData from "../gameData";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { ChevronLeft, ChevronRight } from "react-feather";
 
 export default function Leaderboard() {
   const [waldo, setWaldo] = useState(0);
+  const [scores, setScores] = useState(null);
 
-  const data = [
-    // Mock Score Data...
-  ];
+  const getScores = async () => {
+    try {
+      const request = await fetch(
+        `http://localhost:3000/leaderboard/scores?gameId=${waldo + 1}`
+      );
+      const { scores } = await request.json();
+
+      setScores(scores);
+    } catch (error) {
+      console.log("Error during Fetching Scores: ", error);
+    }
+  };
+
+  useEffect(() => {
+    getScores();
+  }, [waldo]);
 
   const getFormattedDate = (date) =>
     new Date(date).toLocaleDateString("en-US", {
@@ -23,10 +38,28 @@ export default function Leaderboard() {
           alt=""
           className="w-full h-40 md:h-52 object-cover"
         />
-        <div className="bg-[#25207da8] absolute inset-0">
-          <h2 className="font-medium text-2xl md:text-4xl text-white text-center mt-12 md:mt-20">
+        <div className="bg-[#25207da8] pb-6 flex justify-between items-center absolute inset-0">
+          <button
+            className="p-1 text-white transition-opacity active:opacity-30 disabled:pointer-events-none disabled:opacity-30 md:scale-150 md:pl-2"
+            aria-label="Previous Waldo"
+            title="Previous Waldo"
+            disabled={!waldo}
+            onClick={() => setWaldo(waldo - 1)}
+          >
+            <ChevronLeft strokeWidth={2} />
+          </button>
+          <h2 className="font-medium text-2xl md:text-4xl text-white text-center">
             {gameData[waldo].title}
           </h2>
+          <button
+            className="p-1 text-white transition-opacity active:opacity-30 disabled:pointer-events-none disabled:opacity-30 md:scale-150 md:pr-2"
+            aria-label="Next Waldo"
+            title="Next Waldo"
+            disabled={waldo >= gameData.length - 1}
+            onClick={() => setWaldo(waldo + 1)}
+          >
+            <ChevronRight strokeWidth={2} />
+          </button>
         </div>
       </div>
       <div className="px-3 relative -top-[2.3rem] md:-top-12">
@@ -42,18 +75,19 @@ export default function Leaderboard() {
             </tr>
           </thead>
           <tbody className="bg-white outline outline-1 outline-primary rounded-b-md">
-            {data.map((item, index) => (
-              <tr key={index}>
-                <td>{index + 1}</td>
-                <td>{item.username}</td>
-                <td className="border-r-0  md:border-r">
-                  {Math.floor((item.time / 1000) % 60)}.{item.time % 1000}s
-                </td>
-                <td className="hidden  md:table-cell md:border-r-0">
-                  {getFormattedDate(item.createdAt)}
-                </td>
-              </tr>
-            ))}
+            {scores &&
+              scores.map((item, index) => (
+                <tr key={index}>
+                  <td>{index + 1}</td>
+                  <td>{item.username}</td>
+                  <td className="border-r-0  md:border-r">
+                    {Math.floor((item.time / 1000) % 60)}.{item.time % 1000}s
+                  </td>
+                  <td className="hidden  md:table-cell md:border-r-0">
+                    {getFormattedDate(item.createdAt)}
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>
