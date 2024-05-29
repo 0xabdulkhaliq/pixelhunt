@@ -13,13 +13,14 @@ export default function Leaderboard() {
       );
       const { scores } = await request.json();
 
-      setScores(scores);
+      setTimeout(() => setScores(scores), 750);
     } catch (error) {
       console.log("Error during Fetching Scores: ", error);
     }
   };
 
   useEffect(() => {
+    setScores(null);
     getScores();
   }, [waldo]);
 
@@ -32,7 +33,7 @@ export default function Leaderboard() {
 
   return (
     <div className="min-h-[73vh] w-full 2xl:max-w-7xl mx-auto">
-      <div className="mx-auto sticky z-10 bg-[#201d5b] top-10 md:top-12">
+      <div className="mx-auto sticky z-10 bg-[#201d5b] overflow-x-hidden top-10 md:top-12">
         <img
           src={`https://wsrv.nl/?url=${gameData[waldo].image}&w=1200&h=300&fit=cover`}
           alt=""
@@ -75,19 +76,35 @@ export default function Leaderboard() {
             </tr>
           </thead>
           <tbody className="bg-white outline outline-1 outline-primary rounded-b-md">
-            {scores &&
-              scores.map((item, index) => (
-                <tr key={index}>
-                  <td>{index + 1}</td>
-                  <td>{item.username}</td>
-                  <td className="border-r-0  md:border-r">
-                    {Math.floor((item.time / 1000) % 60)}.{item.time % 1000}s
-                  </td>
-                  <td className="hidden  md:table-cell md:border-r-0">
-                    {getFormattedDate(item.createdAt)}
-                  </td>
-                </tr>
-              ))}
+            {scores
+              ? scores.map((item, index) => (
+                  <tr key={index}>
+                    <td>{index + 1}</td>
+                    <td>{item.username}</td>
+                    <td className="border-r-0  md:border-r">
+                      {Math.floor((item.time / 1000) % 60)}.{item.time % 1000}s
+                    </td>
+                    <td className="hidden  md:table-cell md:border-r-0">
+                      {getFormattedDate(item.createdAt)}
+                    </td>
+                  </tr>
+                ))
+              : Array(6)
+                  .fill()
+                  .map((_, index) => (
+                    <tr key={index}>
+                      <td className="w-20">{index + 1}</td>
+                      <td>
+                        <div className="h-4 animate-pulse bg-gray-600 w-3/4 mx-auto"></div>
+                      </td>
+                      <td className="border-r-0  md:border-r">
+                        <div className="h-4 animate-pulse bg-gray-600 w-3/4 mx-auto"></div>
+                      </td>
+                      <td className="hidden md:table-cell md:border-r-0">
+                        <div className="h-4 animate-pulse bg-gray-600 w-3/4 mx-auto"></div>
+                      </td>
+                    </tr>
+                  ))}
           </tbody>
         </table>
       </div>
