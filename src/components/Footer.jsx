@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
-    <footer className="font-normal text-gray-700 bg-white border-y border-y-gray-300 py-6 w-full md:flex flex-col gap-6 md:flex-row-reverse md:justify-between md:px-8">
+    <footer className="font-normal relative text-gray-700 bg-white border-y border-y-gray-300 py-6 w-full md:flex flex-col gap-6 md:flex-row-reverse md:justify-between md:px-8">
       <div className="hidden md:flex md:flex-row-reverse items-center gap-5">
         <div className="hidden md:flex md:gap-3 justify-evenly align-center">
           <Link
@@ -26,7 +26,16 @@ export default function Footer() {
         <p className="font-medium text-3xl">
           Pixel<span className="text-primary">Hunt</span>
         </p>
-        <p>&copy; Copyright 2024 - 0xabdulkhalid</p>
+        <p>
+          &copy; Copyright 2024 -{" "}
+          <a
+            href="https://github.com/0xabdulkhalid/"
+            target="_blank"
+            className="text-primary"
+          >
+            0xabdulkhalid
+          </a>
+        </p>
       </div>
     </footer>
   );

@@ -4,6 +4,7 @@ function Link({ link, label }) {
   return (
     <a
       href={link}
+      target="_blank"
       className="underline underline-offset-2 flex items-center gap-1 md:hover:text-primary"
     >
       {label}

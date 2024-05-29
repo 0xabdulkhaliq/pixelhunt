@@ -1,6 +1,6 @@
 import gameData from "../gameData";
 import { Link } from "react-router-dom";
-import { Play } from "react-feather";
+import { Play, BarChart2 } from "react-feather";
 
 export default function GameSelection() {
   return (
@@ -33,6 +33,16 @@ export default function GameSelection() {
           </div>
         ))}
       </div>
+
+      <hr className="my-6 border-gray-300 max-w-5xl mx-auto" />
+
+      <Link
+        to={"/leaderboard"}
+        className="text-primary block w-max mx-auto border-b border-primary font-normal text-lg"
+      >
+        View Leaderboard
+        <BarChart2 strokeWidth={3} size={20} className="inline ml-2" />
+      </Link>
     </div>
   );
 }

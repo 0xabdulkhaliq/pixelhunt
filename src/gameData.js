@@ -1,6 +1,7 @@
 export default [
   {
     title: "Waldo's Fusion",
+    id: 1,
     image: "https://i.ibb.co/WKn2kdh/waldo-1.webp",
     targets: [
       {
@@ -22,12 +23,13 @@ export default [
   },
   {
     title: "Super Mario's Island",
+    id: 2,
     image: "https://i.ibb.co/3pfc5TV/waldo-2.webp",
     targets: [
       {
         name: "Green Paratroopa",
         image: "https://i.ibb.co/vsHVgRm/green-paratroopa.webp",
-        marker: { x: 1729, y: 719 },
+        marker: { x: 1796, y: 724 },
       },
       {
         name: "Princess Peach",
@@ -43,6 +45,7 @@ export default [
   },
   {
     title: "Gamers Waldo",
+    id: 3,
     image: "https://i.ibb.co/kBswwyN/waldo-3.webp",
     targets: [
       {
