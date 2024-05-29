@@ -20,13 +20,18 @@ export default function Form({ duration, id }) {
       setLoading(true);
       const username = name.current;
 
-      await fetch(`http://localhost:3000/leaderboard/add-score?gameId=${id}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username, duration }),
-      });
+      await fetch(
+        `${
+          import.meta.env.VITE_BACKEND_URL
+        }/leaderboard/add-score?gameId=${id}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ username, duration }),
+        }
+      );
     } catch (error) {
       setError("Network Error, Please try again");
     } finally {

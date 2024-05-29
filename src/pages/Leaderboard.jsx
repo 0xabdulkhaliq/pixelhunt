@@ -9,7 +9,9 @@ export default function Leaderboard() {
   const getScores = async () => {
     try {
       const request = await fetch(
-        `http://localhost:3000/leaderboard/scores?gameId=${waldo + 1}`
+        `${import.meta.env.VITE_BACKEND_URL}/leaderboard/scores?gameId=${
+          waldo + 1
+        }`
       );
       const { scores } = await request.json();
 

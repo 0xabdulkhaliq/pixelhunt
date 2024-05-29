@@ -3,3 +3,4 @@ dist
 package-lock.json
 .eslint*
 postcss*
+.env
