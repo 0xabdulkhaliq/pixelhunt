@@ -32,7 +32,7 @@ export default function Leaderboard() {
     });
 
   return (
-    <div className="min-h-[73vh] w-full 2xl:max-w-7xl mx-auto">
+    <div className="flex-grow w-full 2xl:max-w-7xl mx-auto">
       <div className="mx-auto sticky z-10 bg-[#201d5b] overflow-x-hidden top-10 md:top-12">
         <img
           src={`https://wsrv.nl/?url=${gameData[waldo].image}&w=1200&h=300&fit=cover`}

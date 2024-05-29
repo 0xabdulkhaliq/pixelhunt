@@ -3,7 +3,7 @@ import { Clock } from "react-feather";
 import Modal from "./Modal";
 import Form from "./Form";
 
-const Timer = ({ stats, gameId }) => {
+const Timer = ({ stats, gameId, targetsPreview }) => {
   const [isRunning, setIsRunning] = useState(false);
   const [elapsedTime, setElapsedTime] = useState(null);
   const [modalVisible, setModalVisible] = useState(true);
@@ -54,8 +54,10 @@ const Timer = ({ stats, gameId }) => {
         </div>
       </div>
       <Modal visibility={modalVisible}>
+        <h2 className="text-white text-2xl font-medium">You need to find,</h2>
+        {targetsPreview}
         <button
-          className="bg-primary cursor-pointer text-white border-2 border-white text-center block px-6 py-3 uppercase tracking-wider font-medium shadow-lg rounded-lg transition-[transform,background] duration-500 hover:bg-indigo-700 active:scale-90 text-md w-max"
+          className="bg-primary mt-4 mx-auto cursor-pointer text-white border-2 border-white text-center block px-6 py-3 uppercase tracking-wider font-medium shadow-lg rounded-lg transition-[transform,background] duration-500 hover:bg-indigo-700 active:scale-90 text-md w-max"
           onClick={startTimer}
         >
           Start Game

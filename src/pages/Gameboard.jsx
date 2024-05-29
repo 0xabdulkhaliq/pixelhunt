@@ -54,9 +54,9 @@ export default function Gameboard() {
     const indicator = document.createElement("div");
     indicator.style.left = `${coords.X - 28}px`;
     indicator.style.top = `${coords.Y - 28}px`;
-    indicator.style.background = isSuccess ? "#0a0c" : "#a00c";
+    indicator.style.background = isSuccess ? "#0a0b" : "#a00b";
     indicator.className =
-      "grid absolute top-0 left-0 place-items-center -outline-offset-[.3rem] w-14 h-14 rounded-full outline-dashed outline-3 outline-white";
+      "grid absolute pointer-events-none top-0 left-0 place-items-center -outline-offset-[.3rem] w-14 h-14 rounded-full outline-dashed outline-3 outline-white";
 
     indicator.innerHTML = `<svg width="28" height="28" viewBox="0 0 24 24" stroke="#fff" fill="none" stroke-width="3">${
       isSuccess
@@ -88,7 +88,7 @@ export default function Gameboard() {
             style={{
               translate: `${coords.X - 28}px ${coords.Y - 28}px`,
             }}
-            className="grid absolute top-0 left-0 place-items-center -outline-offset-[.3rem] w-14 h-14 rounded-full outline-dashed outline-3 outline-white bg-[#0008]"
+            className="grid absolute z-20 top-0 left-0 place-items-center -outline-offset-[.3rem] w-14 h-14 rounded-full outline-dashed outline-3 outline-white bg-[#0008]"
           >
             <div className="w-2 h-2 bg-white rounded-full"></div>
 
@@ -118,7 +118,26 @@ export default function Gameboard() {
           </div>
         )}
       </div>
-      <Timer stats={targetStats} gameId={state.id} />
+      <Timer
+        stats={targetStats}
+        gameId={state.id}
+        targetsPreview={
+          <div className="flex flex-col justify-center gap-1 md:flex-row md:min-w-[40rem] md:gap-4">
+            {state.targets.map((item, index) => (
+              <div
+                key={index}
+                className="p-3 rounded-md bg-gray-50 pr-4 flex gap-2 w-full max-w-52 items-center font-normal text-start"
+              >
+                <img
+                  src={item.image}
+                  className="w-12 h-12 outline outline-1 outline-gray-400 rounded-md object-cover"
+                />
+                {item.name}
+              </div>
+            ))}
+          </div>
+        }
+      />
     </main>
   );
 }
