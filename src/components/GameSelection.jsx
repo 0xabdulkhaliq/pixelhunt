@@ -10,9 +10,9 @@ export default function GameSelection() {
       </h1>
 
       <div className="flex flex-col gap-5 p-2 max-w-lg mx-auto lg:flex-row lg:justify-center lg:max-w-5xl">
-        {gameData.map((item, index) => (
+        {gameData.map((item) => (
           <div
-            key={index}
+            key={item.id}
             className="bg-white outline outline-1 outline-indigo-300 p-2 rounded-lg shadow md:flex-grow"
           >
             <img
@@ -24,7 +24,7 @@ export default function GameSelection() {
               <Link
                 to={"/gameboard"}
                 state={item}
-                className="btn-primary text-md flex items-center justify-between mt-2 w-full"
+                className="bg-primary cursor-pointer text-white text-center px-4 py-2 uppercase tracking-wider font-medium shadow-md rounded-md transition-[transform,background] duration-500 hover:bg-indigo-700 active:scale-90 text-md flex items-center justify-between mt-2 w-full"
               >
                 <h2>{item.title}</h2>
                 <Play stroke="#fff" strokeWidth={3} size={16} />

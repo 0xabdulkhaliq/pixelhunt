@@ -3,7 +3,7 @@ import { Loader, CheckCircle } from "react-feather";
 import { useNavigate } from "react-router-dom";
 
 export default function Form({ duration, id }) {
-  const username = useRef(null);
+  const name = useRef(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(null);
   const [successDialog, setSuccessDialog] = useState(null);
@@ -12,12 +12,13 @@ export default function Form({ duration, id }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!username.current) return setError("Username cannot be empty");
-    if (username.current.length <= 3)
+    if (!name.current) return setError("Username cannot be empty");
+    if (name.current.length <= 3)
       return setError("Username must be 3-20 characters");
 
     try {
       setLoading(true);
+      const username = name.current;
 
       await fetch(`http://localhost:3000/leaderboard/add-score?gameId=${id}`, {
         method: "POST",
@@ -68,7 +69,7 @@ export default function Form({ duration, id }) {
           Username
         </label>
         <input
-          onChange={(e) => (username.current = e.target.value)}
+          onChange={(e) => (name.current = e.target.value)}
           type="text"
           name="name"
           id="name"

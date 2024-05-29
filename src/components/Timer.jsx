@@ -47,7 +47,7 @@ const Timer = ({ stats, gameId }) => {
 
   return (
     <>
-      <div className="fixed top-0 right-0 mt-[2px] p-2 md:p-3 z-10">
+      <div className="fixed top-0 right-0 mt-[2px] p-2 md:p-3 z-20">
         <div className="flex items-center gap-2 min-w-[7.1rem]">
           <Clock strokeWidth={3} size={19} className="text-primary" />
           <p className="text-lg">{formatTime(elapsedTime)}</p>
