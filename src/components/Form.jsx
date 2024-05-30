@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { Loader, CheckCircle } from "react-feather";
 import { useNavigate } from "react-router-dom";
+import { formatDuration } from "../utils/formatDuration";
 
 export default function Form({ duration, id }) {
   const name = useRef(null);
@@ -61,11 +62,8 @@ export default function Form({ duration, id }) {
       className="bg-white shadow-xl w-full max-w-96 rounded-lg p-4 text-center"
     >
       <p className="font-medium mb-1 text-2xl">
-        You finished in{" "}
-        <span className="text-primary">
-          {Math.floor((duration / 1000) % 60)}.{duration % 1000}s
-        </span>
-        !
+        You finished in &nbsp;
+        <span className="text-primary">{formatDuration(duration)}</span>!
       </p>
       <p>Submit your score to the Leaderboard</p>
 

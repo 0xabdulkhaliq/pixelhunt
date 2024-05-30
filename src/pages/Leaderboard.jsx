@@ -1,6 +1,7 @@
 import gameData from "../gameData";
 import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "react-feather";
+import { formatDuration } from "../utils/formatDuration";
 
 export default function Leaderboard() {
   const [waldo, setWaldo] = useState(0);
@@ -84,7 +85,7 @@ export default function Leaderboard() {
                     <td>{index + 1}</td>
                     <td>{item.username}</td>
                     <td className="border-r-0  md:border-r">
-                      {Math.floor((item.time / 1000) % 60)}.{item.time % 1000}s
+                      {formatDuration(item.time)}
                     </td>
                     <td className="hidden  md:table-cell md:border-r-0">
                       {getFormattedDate(item.createdAt)}
