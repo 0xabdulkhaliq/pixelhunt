@@ -29,11 +29,11 @@ export default function Footer() {
         <p>
           &copy; Copyright 2024 -{" "}
           <a
-            href="https://github.com/0xabdulkhalid/"
+            href="https://github.com/0xabdulkhaliq/"
             target="_blank"
             className="text-primary"
           >
-            0xabdulkhalid
+            0xabdulkhaliq
           </a>
         </p>
       </div>

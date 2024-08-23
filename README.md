@@ -1,6 +1,6 @@
 <div align=center>
 
-![Pixel Hunt](https://i.ibb.co/FwJdRnY/pixelhunt.webp)
+![Pixel Hunt](https://i.ibb.co/St902T4/pixelhunt.webp)
 
 ### ❝ An engaging, full-stack hidden object game inspired by "Where's Wally", featuring a dynamic React + Tailwind frontend, and a robust Express + Mongoose backend. ❞
 
@@ -9,9 +9,9 @@
     ❯ &nbsp;
     <a href="https://pixelhunt.vercel.app/">View Demo</a>
     &nbsp;·&nbsp;
-    <a href="https://github.com/0xabdulkhalid/pixelhunt/issues">Report Bug</a>
+    <a href="https://github.com/0xabdulkhaliq/pixelhunt/issues">Report Bug</a>
     &nbsp;·&nbsp;
-    <a href="https://github.com/0xabdulkhalid/pixelhunt/issues">Request Feature</a>
+    <a href="https://github.com/0xabdulkhaliq/pixelhunt/issues">Request Feature</a>
      &nbsp; ❮
   </p>
 </div>
@@ -81,13 +81,13 @@
 ## Let's Connect 👋
 
 <div align=center>
-  <a href="https://linkedin.com/in/0xabdulkhalid" >
+  <a href="https://linkedin.com/in/0xabdulkhaliq" >
     <img src="https://img.shields.io/badge/linkedin-%2300acee.svg?color=405DE6&style=for-the-badge&logo=linkedin&logoColor=white" alt="Linkedin Profile">
   </a>&nbsp;&nbsp;
-  <a href="mailto:0xabdulkhalid@gmail.com" target="_blank">
+  <a href="mailto:0xabdulkhaliq@gmail.com" target="_blank">
     <img src="https://img.shields.io/badge/gmail-%23EA4335.svg?style=for-the-badge&logo=gmail&logoColor=white" alt=mail/>
   </a>&nbsp;&nbsp;
-  <a href="https://www.github.com/0xabdulkhalid/" >
+  <a href="https://www.github.com/0xabdulkhaliq/" >
     <img src="https://img.shields.io/badge/Github-131313?style=for-the-badge&logo=github&logoColor=white" alt="Github Profile">
   </a>
 </div>

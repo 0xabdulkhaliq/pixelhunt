@@ -16,10 +16,10 @@ function Link({ link, label }) {
 export default function SocialLinks() {
   return (
     <div className="flex justify-evenly align-center mb-7 md:my-3 md:gap-3">
-      <Link link={"https://github.com/0xabdulkhalid/"} label={"Github"} />
-      <Link link={"mailto:0xabdulkhalid@gmail.com"} label={"Mail"} />
+      <Link link={"https://github.com/0xabdulkhaliq/"} label={"Github"} />
+      <Link link={"mailto:0xabdulkhaliq@gmail.com"} label={"Mail"} />
       <Link
-        link={"https://www.linkedin.com/in/0xabdulkhalid/"}
+        link={"https://www.linkedin.com/in/0xabdulkhaliq/"}
         label={"Linkedin"}
       />
     </div>
